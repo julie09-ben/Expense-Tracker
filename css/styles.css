@@ -1,0 +1,33 @@
+/* Background Image */
+.bg-image {
+    background: url('../images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    overflow: hidden;
+}
+
+/* Centered Form Box */
+.form-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    z-index: 10;
+}
+
+/* Falling Coins Animation */
+.coin {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: url('../images/coin.png') no-repeat center;
+    background-size: contain;
+    top: -50px;
+    animation: fall 4s linear infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
+}
