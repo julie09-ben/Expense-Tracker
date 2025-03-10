@@ -1,8 +1,10 @@
-require('dotenv').config(); // Load environment variables
-
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const userRoutes = require('./routes/userRoutes');
+const transactionRoutes = require('./routes/transactionRoutes');
+const budgetRoutes = require('./routes/budgetRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -11,25 +13,18 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cors());
 
-// Debugging: Check if MONGO_URI is loaded
-console.log('MONGO_URI:', process.env.MONGO_URI);
+// Routes
+app.use('/api/users', userRoutes);
+app.use('/api/transactions', transactionRoutes);
+app.use('/api/budgets', budgetRoutes);
 
 // MongoDB Connection
-const mongoURI = process.env.MONGO_URI || 'mongodb+srv://SravyaTejavath:SravyaJulie@financedb.lkt1e.mongodb.net/';
-
-mongoose.connect(mongoURI, {
+mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
-.then(() => console.log('✅ MongoDB Connected!'))
-.catch(err => console.log('❌ MongoDB Connection Error:', err));
-
-// Sample Route (Test if the server is running)
-app.get('/', (req, res) => {
-    res.send('🚀 Server is running!');
-});
-
-// Start Server
-app.listen(PORT, () => {
-    console.log(`🔥 Server running on port ${PORT}`);
-});
+.then(() => {
+    console.log('✅ MongoDB Connected!');
+    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+})
+.catch(err => console.error('❌ MongoDB Connection Error:', err));
